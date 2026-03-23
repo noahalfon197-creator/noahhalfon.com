@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pitch Viewer - Noah Halfon</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: #000;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .back-link {
+            color: #8A8A93;
+            text-decoration: none;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover { color: #fff; }
+
+        .title {
+            font-size: 1rem;
+            font-weight: 400;
+        }
+
+        .download-link {
+            color: #8A8A93;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.3s;
+        }
+
+        .download-link:hover { color: #fff; }
+
+        .pdf-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .pdf-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: #111;
+        }
+
+        .pdf-container object {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="back-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            Back
+        </a>
+        <div class="title" id="doc-title">Loading...</div>
+        <a href="#" class="download-link" id="download-link">Download PDF</a>
+    </header>
+
+    <div class="pdf-container">
+        <iframe id="pdf-frame"></iframe>
+    </div>
+
+    <script>
+        // Get PDF file from URL parameter
+        const params = new URLSearchParams(window.location.search);
+        const pdfFile = params.get('file');
+        const title = params.get('title') || 'Document';
+
+        if (pdfFile) {
+            document.getElementById('pdf-frame').src = pdfFile;
+            document.getElementById('doc-title').textContent = title;
+            document.getElementById('download-link').href = pdfFile;
+            document.title = title + ' - Noah Halfon';
+        } else {
+            document.getElementById('doc-title').textContent = 'No document specified';
+        }
+    </script>
+</body>
+</html>
